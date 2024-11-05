@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import '../models/movie.dart';
 import '../services/movie_service.dart';
 
 class MovieProvider with ChangeNotifier {
-  List<Movie> _movies = [];
+  List<Map<String, dynamic>> _movies = []; // Change to a list of maps
   final MovieService _movieService = MovieService();
 
-  List<Movie> get movies => _movies;
+  List<Map<String, dynamic>> get movies => _movies; // Update getter
 
   Future<void> searchMovies(String keyword) async {
     try {
-      _movies = await _movieService.searchMovies(keyword);
+      _movies = await _movieService.searchMovies(keyword); // Update to fetch maps
       notifyListeners();
     } catch (error) {
       print("Error: $error");

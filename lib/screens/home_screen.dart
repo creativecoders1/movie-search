@@ -1,8 +1,6 @@
-// screens/movies_app_home.dart
 import 'package:flutter/material.dart';
 import 'package:movie_search/constants/custom_size.dart';
 import '../constants/custome_colors.dart';
-import '../models/movie.dart';
 import '../services/movie_service.dart';
 
 import '../widgets/movie_list.dart';
@@ -37,7 +35,7 @@ class _HomeScreen extends State<HomeScreen> {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+              const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
               child: TextField(
                 onSubmitted: (context) {
                   setState(() {
@@ -53,8 +51,8 @@ class _HomeScreen extends State<HomeScreen> {
                     borderSide: BorderSide(color: Colors.black, width: 2),
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.zero
+                      borderSide: BorderSide(color: Colors.black, width: 2),
+                      borderRadius: BorderRadius.zero
                   ),
                   hintText: "Search",
                   hintStyle: TextStyle(
@@ -76,7 +74,7 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
             Expanded(
-              child: FutureBuilder<List<Movie>>(
+              child: FutureBuilder<List<Map<String, dynamic>>>(
                 future: MovieService().searchMovies(searchText),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movie_search/models/movie.dart';
 
 import '../constants/custom_size.dart';
-import '../constants/custome_colors.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
-  final Movie movie;
+  final Map<String, dynamic> movie; // Using Map for movie details
 
   const MovieDetailsScreen({super.key, required this.movie});
 
@@ -13,31 +11,31 @@ class MovieDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 8),
-            width: double.infinity,
-            height: screenHeight * 0.27,
-            child: Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MovieDetailsScreen(movie: movie),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 100.0, right: 10, bottom: 10),
+      appBar: AppBar(
+        title: Text(movie['Title']), // Display the movie title in the app bar
+        backgroundColor: Colors.white,
+      ),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              padding:
+                  const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 8),
+              width: double.infinity,
+              height: screenHeight * 0.27,
+              child: Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(
+                        top: 100.0, right: 10, bottom: 10),
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     width: double.infinity,
                     height: screenHeight * 0.17,
                     decoration: BoxDecoration(
-                      color: CustomColors.white,
+                      color: Colors.black12,
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
@@ -59,7 +57,7 @@ class MovieDetailsScreen extends StatelessWidget {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
-                                  movie.title,
+                                  movie['Title'], // Access map value
                                   style: TextStyle(
                                       fontSize: CustomFontSize.medium,
                                       fontWeight: CustomFontWeight.bold),
@@ -70,9 +68,10 @@ class MovieDetailsScreen extends StatelessWidget {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
-                                  movie.genre.replaceAll(",", " |"),
+                                  movie['Genre'].replaceAll(",", " |"),
+                                  // Access map value
                                   style: TextStyle(
-                                      color: Colors.grey,
+                                      color: Colors.white,
                                       fontSize: CustomFontSize.small),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -84,20 +83,25 @@ class MovieDetailsScreen extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: (double.tryParse(movie.rating) ?? 0) >=
-                                          7.0
-                                          ? CustomColors.green
-                                          : (double.tryParse(movie.rating) ?? 0) >=
-                                          4.0
-                                          ? CustomColors.blue
-                                          : Colors.red),
+                                      color: (double.tryParse(
+                                                      movie['imdbRating']) ??
+                                                  0) >=
+                                              7.0
+                                          ? Colors.green
+                                          : (double.tryParse(movie[
+                                                          'imdbRating']) ??
+                                                      0) >=
+                                                  4.0
+                                              ? Colors.blue
+                                              : Colors.red),
                                   child: Center(
                                     child: Text(
-                                      '${movie.rating.split("/")[0]} IMDB',
+                                      '${movie['imdbRating']} IMDB',
+                                      // Access map value
                                       style: TextStyle(
                                           fontSize: CustomFontSize.small,
                                           fontWeight: CustomFontWeight.semiBold,
-                                          color: CustomColors.white),
+                                          color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -108,42 +112,78 @@ class MovieDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                if (movie.poster != "N/A")
-                  Positioned(
-                    bottom: 9,
-                    left: 3.0,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0,
-                        vertical: 20.0,
-                      ),
-                      width: screenWidth * .34,
-                      height: screenHeight * 0.22,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: CustomColors.softBlack,
-                            blurRadius: 2.0,
+                  if (movie['Poster'] != "N/A") // Access map value
+                    Positioned(
+                      bottom: 9,
+                      left: 3.0,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 20.0,
+                        ),
+                        width: screenWidth * .34,
+                        height: screenHeight * 0.22,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.network(
+                            movie['Poster'], // Access map value
+                            fit: BoxFit.cover,
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network(
-                          movie.poster,
-                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
-          
+            const SizedBox(height: 10), // Spacing
+            Expanded(
+              child: ListView.builder(
+                itemCount: movie.length,
+                itemBuilder: (context, index) {
+                  String key = movie.keys.elementAt(index);
+                  String value = movie[key].toString();
 
-        ],
+                  return Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      // color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.20),
+                            offset: const Offset(5.0, 4.0),
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          key,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: CustomFontWeight.bold),
+                        ),
+                        // Display the detail title
+                        subtitle: Text(value), // Display the detail value
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

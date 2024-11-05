@@ -1,12 +1,10 @@
-// components/movie_item.dart
 import 'package:flutter/material.dart';
 import 'package:movie_search/screens/movie_details_screen.dart';
 import '../constants/custom_size.dart';
 import '../constants/custome_colors.dart';
-import '../models/movie.dart';
 
 class MovieItem extends StatelessWidget {
-  final Movie movie;
+  final Map<String, dynamic> movie; // Change to map
 
   const MovieItem({super.key, required this.movie});
 
@@ -25,7 +23,7 @@ class MovieItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MovieDetailsScreen(movie: movie),
+                  builder: (context) => MovieDetailsScreen(movie: movie), // Pass map
                 ),
               );
             },
@@ -57,7 +55,7 @@ class MovieItem extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Text(
-                            movie.title,
+                            movie['Title'], // Access map value
                             style: TextStyle(
                                 fontSize: CustomFontSize.medium,
                                 fontWeight: CustomFontWeight.bold),
@@ -68,7 +66,7 @@ class MovieItem extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Text(
-                            movie.genre.replaceAll(",", " |"),
+                            movie['Genre'].replaceAll(",", " |"), // Access map value
                             style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: CustomFontSize.small),
@@ -82,16 +80,16 @@ class MovieItem extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: (double.tryParse(movie.rating) ?? 0) >=
-                                        7.0
+                                color: (double.tryParse(movie['imdbRating']) ?? 0) >=
+                                    7.0
                                     ? CustomColors.green
-                                    : (double.tryParse(movie.rating) ?? 0) >=
-                                            4.0
-                                        ? CustomColors.blue
-                                        : Colors.red),
+                                    : (double.tryParse(movie['imdbRating']) ?? 0) >=
+                                    4.0
+                                    ? CustomColors.blue
+                                    : Colors.red),
                             child: Center(
                               child: Text(
-                                '${movie.rating.split("/")[0]} IMDB',
+                                '${movie['imdbRating']} IMDB', // Access map value
                                 style: TextStyle(
                                     fontSize: CustomFontSize.small,
                                     fontWeight: CustomFontWeight.semiBold,
@@ -107,7 +105,7 @@ class MovieItem extends StatelessWidget {
               ),
             ),
           ),
-          if (movie.poster != "N/A")
+          if (movie['Poster'] != "N/A") // Access map value
             Positioned(
               bottom: 9,
               left: 3.0,
@@ -130,7 +128,7 @@ class MovieItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.network(
-                    movie.poster,
+                    movie['Poster'], // Access map value
                     fit: BoxFit.cover,
                   ),
                 ),
