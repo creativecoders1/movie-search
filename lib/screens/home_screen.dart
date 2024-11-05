@@ -22,7 +22,7 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black12,
+        backgroundColor: Colors.white,
         title: Text(
           'Home',
           style: TextStyle(
@@ -32,7 +32,7 @@ class _HomeScreen extends State<HomeScreen> {
         ),
       ),
       body: Container(
-        color: Colors.black12,
+        color: Colors.white,
         child: Column(
           children: [
             Padding(
