@@ -35,13 +35,13 @@ class MovieDetailsScreen extends StatelessWidget {
                     width: double.infinity,
                     height: screenHeight * 0.17,
                     decoration: BoxDecoration(
-                      color: Colors.black12,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.20),
                           offset: const Offset(5.0, 4.0),
-                          blurRadius: 6.0,
+                          blurRadius: 7.0,
                         ),
                       ],
                     ),
@@ -71,7 +71,7 @@ class MovieDetailsScreen extends StatelessWidget {
                                   movie['Genre'].replaceAll(",", " |"),
                                   // Access map value
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.grey,
                                       fontSize: CustomFontSize.small),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -157,13 +157,13 @@ class MovieDetailsScreen extends StatelessWidget {
                     child: Container(
                       // color: Colors.white,
                       decoration: BoxDecoration(
-                        color: Colors.black12,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.20),
                             offset: const Offset(5.0, 4.0),
-                            blurRadius: 6.0,
+                            blurRadius: 10.0,
                           ),
                         ],
                       ),
