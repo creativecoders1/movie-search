@@ -33,8 +33,5 @@ widgets/: Reusable widgets for building the UI.
 🔧 Requirements
 Flutter SDK
 An Android or iOS device/emulator
-📸 Screenshots
-
-
 🤝 Contributing
 Feel free to contribute by forking the project and submitting a pull request!
