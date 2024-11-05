@@ -1,4 +1,5 @@
 🎬 Movie Search App
+
 A simple and efficient movie search app built with Flutter! This app allows users to search for movies, view details like ratings and release years, and explore a curated selection of films based on search criteria. Leveraging the Provider package for state management, it ensures a smooth and responsive experience.
 
 ✨ Features
