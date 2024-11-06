@@ -19,23 +19,24 @@ class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        shadowColor: Colors.white,
         backgroundColor: Colors.white,
-        title: Text(
-          'Home',
-          style: TextStyle(
-            color: CustomColors.black,
-            fontWeight: CustomFontWeight.bold,
-            fontSize: CustomFontSize.big,
-          ),
+        title: Image.asset(
+          "assets/icon/app_icon.png",
+          width: 65,
+          height: 65,
         ),
       ),
-      body: Container(
-        padding:  const EdgeInsets.symmetric(horizontal: 17.0,vertical: 10),
-        color: Colors.white,
-        child: Column(
-          children: [
-            TextField(
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.transparent),
+            child: TextField(
               onSubmitted: (value) {
                 setState(() {
                   searchText = value;
@@ -47,31 +48,26 @@ class _HomeScreen extends State<HomeScreen> {
                 fillColor: const Color(0xFFedf0f9),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(30)
-
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(30)
-
+                hintText: "Search for movies",
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Icon(
+                    Icons.movie_filter_outlined,
+                    color: Colors.grey[600],
+                  ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(30)
-
-                ),
-                hintText: "Search",
-                prefixIcon: Icon(Icons.movie_filter_outlined),
                 hintStyle: TextStyle(
                   fontSize: CustomFontSize.medium,
-                  color: CustomColors.softBlack,
+                  color: Colors.grey[700],
                   fontWeight: CustomFontWeight.medium,
                 ),
                 suffixIcon: IconButton(
                   padding: const EdgeInsets.only(right: 15),
                   icon: Icon(
                     Icons.search,
-                    color: CustomColors.softBlack,
+                    color: Colors.grey[700],
                   ),
                   onPressed: () {
                     setState(() {
@@ -81,40 +77,42 @@ class _HomeScreen extends State<HomeScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: FutureBuilder<List<Map<String, dynamic>>>(
-                future: MovieService().searchMovies(searchText),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No movies found'));
-                  } else {
-                    final List<Map<String, dynamic>> movies = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: movies.length,
-                      itemBuilder: (context, index) {
-                        final Map<String, dynamic> movie = movies[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => MovieDetailsScreen(movie: movie), // Pass map
-                              ),
-                            );
-                          },
-                          child: MoviePosterWithBasicDetails(movie: movie), // Pass map
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
+          ),
+          Flexible(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: MovieService().searchMovies(searchText),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No movies found'));
+                } else {
+                  final List<Map<String, dynamic>> movies = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: movies.length,
+                    itemBuilder: (context, index) {
+                      final Map<String, dynamic> movie = movies[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MovieDetailsScreen(movie: movie), // Pass map
+                            ),
+                          );
+                        },
+                        child: MoviePosterWithBasicDetails(
+                            movie: movie), // Pass map
+                      );
+                    },
+                  );
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

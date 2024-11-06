@@ -9,9 +9,7 @@ class MoviePosterWithBasicDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      padding:
-      const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 8),
+    return SizedBox(
       width: double.infinity,
       height: screenHeight * 0.27,
       child: Stack(
