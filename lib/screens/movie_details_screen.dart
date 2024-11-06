@@ -31,7 +31,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   String key = movie.keys.elementAt(index);
                   String value = movie[key].toString();
 
-                  return Padding(
+                  return key=="Poster"?null:Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Container(
                       // color: Colors.white,
@@ -47,6 +47,7 @@ class MovieDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       child: ListTile(
+
                         title: Text(
                           key,
                           style: TextStyle(
@@ -54,7 +55,7 @@ class MovieDetailsScreen extends StatelessWidget {
                               fontWeight: CustomFontWeight.bold),
                         ),
                         // Display the detail title
-                        subtitle: Text(value), // Display the detail value
+                        subtitle: value=="N/A"?const Text("This info Not Updated yet..."):Text(value), // Display the detail value
                       ),
                     ),
                   );

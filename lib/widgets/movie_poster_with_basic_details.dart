@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../constants/custom_size.dart';
 
 class MoviePosterWithBasicDetails extends StatelessWidget {

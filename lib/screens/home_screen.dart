@@ -31,45 +31,53 @@ class _HomeScreen extends State<HomeScreen> {
         ),
       ),
       body: Container(
+        padding:  const EdgeInsets.symmetric(horizontal: 17.0,vertical: 10),
         color: Colors.white,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-              child: TextField(
-                onSubmitted: (value) {
-                  setState(() {
-                    searchText = value;
-                  });
-                },
-                controller: searchController,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 2),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 2),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 2),
-                  ),
-                  hintText: "Search",
-                  hintStyle: TextStyle(
-                    fontSize: CustomFontSize.medium,
+            TextField(
+              onSubmitted: (value) {
+                setState(() {
+                  searchText = value;
+                });
+              },
+              controller: searchController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xFFedf0f9),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(30)
+
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(30)
+
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(30)
+
+                ),
+                hintText: "Search",
+                prefixIcon: Icon(Icons.movie_filter_outlined),
+                hintStyle: TextStyle(
+                  fontSize: CustomFontSize.medium,
+                  color: CustomColors.softBlack,
+                  fontWeight: CustomFontWeight.medium,
+                ),
+                suffixIcon: IconButton(
+                  padding: const EdgeInsets.only(right: 15),
+                  icon: Icon(
+                    Icons.search,
                     color: CustomColors.softBlack,
-                    fontWeight: CustomFontWeight.medium,
                   ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: CustomColors.softBlack,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        searchText = searchController.text;
-                      });
-                    },
-                  ),
+                  onPressed: () {
+                    setState(() {
+                      searchText = searchController.text;
+                    });
+                  },
                 ),
               ),
             ),
