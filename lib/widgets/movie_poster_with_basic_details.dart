@@ -16,7 +16,7 @@ class MoviePosterWithBasicDetails extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(
-                top: 100.0, right: 10, bottom: 10),
+                top: 100.0, right: 10, bottom: 10,left:10),
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             width: double.infinity,
             height: screenHeight * 0.17,
@@ -40,21 +40,18 @@ class MoviePosterWithBasicDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 15),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Text(
-                          movie['Title'], // Access map value
-                          style: TextStyle(
-                              fontSize: CustomFontSize.medium,
-                              fontWeight: CustomFontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        movie['Title'], // Access map value
+                        style: TextStyle(
+                            fontSize: CustomFontSize.medium,
+                            fontWeight: CustomFontWeight.bold),
+                        overflow:movie['Title'].length>43? TextOverflow.ellipsis:TextOverflow.visible
                       ),
                       const SizedBox(height: 4),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          movie['Genre'].replaceAll(",", " |"),
+                          movie['Genre'].replaceAll(",", " | "),
                           // Access map value
                           style: TextStyle(
                               color: Colors.grey,
@@ -98,35 +95,32 @@ class MoviePosterWithBasicDetails extends StatelessWidget {
               ],
             ),
           ),
-          if (movie['Poster'] != "N/A") // Access map value
-            Positioned(
-              bottom: 9,
-              left: 3.0,
-              child: Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 20.0,
-                ),
-                width: screenWidth * .34,
-                height: screenHeight * 0.22,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 2.0,
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Image.network(
-                    movie['Poster'], // Access map value
-                    fit: BoxFit.cover,
+          if (movie['Poster'] != "N/A")// Access map value
+            Container(
+              margin: const EdgeInsets.only(
+                left: 20.0,
+                top: 5
+              ),
+              width: screenWidth * .34,
+              height: screenHeight * 0.23,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 2.0,
                   ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: Image.network(
+                  movie['Poster'], // Access map value
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
+            )
+
         ],
       ),
     );

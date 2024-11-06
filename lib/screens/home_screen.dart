@@ -83,11 +83,15 @@ class _HomeScreen extends State<HomeScreen> {
               future: MovieService().searchMovies(searchText),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Align(
+                      alignment: Alignment.topCenter,
+                      child: LinearProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return Center(
+                      child: Text(((snapshot.error).toString()).substring(
+                          10, (snapshot.error).toString().length - 1)));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('No movies found'));
+                  return const Center(child: Text('Movie not found!'));
                 } else {
                   final List<Map<String, dynamic>> movies = snapshot.data!;
                   return ListView.builder(
